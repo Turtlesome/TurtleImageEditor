@@ -1,10 +1,11 @@
 #include "Image.h"
 
-Image::Image(QWidget* parent) : QLabel(parent), isMirrored(false), brightness(0), contrast(0)
+Image::Image(QWidget* parent) : QLabel(parent), isMirrored(false), brightness(0), contrast(0), isCropMode(false)
 {
     fileName = QString();
     originalPixmap = QPixmap();
     isMirrored = false;
+	isCropMode = false;
 }   
 
 Image::~Image()
@@ -323,5 +324,77 @@ void Image::changeRGB()
     }
 };
 
+void Image::createNegative()
+{
+    if (!originalPixmap.isNull())
+    {
+        QImage image = originalPixmap.toImage();
+        for (int y = 0; y < image.height(); ++y)
+        {
+            for (int x = 0; x < image.width(); ++x)
+            {
+                QColor color(image.pixel(x, y));
+                color.setRgb(255 - color.red(), 255 - color.green(), 255 - color.blue());
+                image.setPixelColor(x, y, color);
+            }
+        }
+        originalPixmap = QPixmap::fromImage(image);
+        this->setPixmap(originalPixmap);
+    }
+};
 
+void Image::cropImage()
+{
+    if (!originalPixmap.isNull() && cropArea.isValid())
+    {
+        QImage image = originalPixmap.toImage();
+        image = image.copy(cropArea);
+        originalPixmap = QPixmap::fromImage(image);
+        this->setPixmap(originalPixmap);
+    }
+}
+
+void Image::enableCropMode(bool enabled)
+{
+    isCropMode = enabled;
+}
+
+void Image::mousePressEvent(QMouseEvent* event)
+{
+    if (isCropMode) {
+        origin = event->pos();
+        cropArea = QRect(origin, QSize());
+        update();
+    }
+}
+
+void Image::mouseMoveEvent(QMouseEvent* event)
+{
+    if (isCropMode) {
+        QPoint bottomRight = event->pos();
+        cropArea = QRect(origin, bottomRight).normalized();
+        update();
+    }
+}
+
+void Image::mouseReleaseEvent(QMouseEvent* event)
+{
+    if (isCropMode) {
+        cropImage();
+        update();
+    }
+}
+
+void Image::paintEvent(QPaintEvent* event)
+{
+    QLabel::paintEvent(event);  // Call base class paint event
+
+    if (isCropMode && !cropArea.isNull())
+    {
+        // Draw the crop area
+        QPainter painter(this);
+        painter.setPen(QPen(Qt::red, 2));  // Set pen color and width
+        painter.drawRect(cropArea);
+    }
+}
 
