@@ -10,6 +10,7 @@
 #include <QFormLayout>
 #include <QSpinBox>
 #include <QDialogButtonBox>
+#include <QPainter>
 
 class Image : public QLabel {
     Q_OBJECT
@@ -29,11 +30,12 @@ public:
     void saveImage();
     void changeBrightness();
     void changeContrast();
-	void mirrorImage();
+    void mirrorImage();
     void resizeImage();
     void rotateImage();
     void changeHue();
-	void changeSaturation();
+    void changeSaturation();
     
     void convertToGrayscale();
+    void changeRGB();
 };
