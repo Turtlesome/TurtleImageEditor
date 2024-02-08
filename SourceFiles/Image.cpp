@@ -387,13 +387,12 @@ void Image::mouseReleaseEvent(QMouseEvent* event)
 
 void Image::paintEvent(QPaintEvent* event)
 {
-    QLabel::paintEvent(event);  // Call base class paint event
+    QLabel::paintEvent(event);
 
     if (isCropMode && !cropArea.isNull())
     {
-        // Draw the crop area
         QPainter painter(this);
-        painter.setPen(QPen(Qt::red, 2));  // Set pen color and width
+        painter.setPen(QPen(Qt::red, 2));
         painter.drawRect(cropArea);
     }
 }
