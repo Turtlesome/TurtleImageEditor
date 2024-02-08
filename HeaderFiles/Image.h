@@ -34,4 +34,6 @@ public:
     void rotateImage();
     void changeHue();
 	void changeSaturation();
+    
+    void convertToGrayscale();
 };
