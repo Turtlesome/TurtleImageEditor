@@ -28,12 +28,14 @@ int main(int argc, char* argv[])
 
     QMenu* fileMenu = new QMenu("File");
     QMenu* optionMenu = new QMenu("Options");
+	QMenu* otherMenu = new QMenu("Other");
     QMenu* zoomMenu = new QMenu("Zoom options");
 	QMenu* helpMenu = new QMenu("Help");
     menuBar->addMenu(fileMenu);
     menuBar->addMenu(optionMenu);
-	menuBar->addMenu(helpMenu);
-	menuBar->addMenu(zoomMenu);
+	menuBar->addMenu(otherMenu);
+    menuBar->addMenu(zoomMenu);
+    menuBar->addMenu(helpMenu);
 
 
     QAction* openAction = new QAction("Open");
@@ -74,6 +76,10 @@ int main(int argc, char* argv[])
     optionMenu->addAction(saturationAction);
 
 
+	QAction* grayscaleAction = new QAction("Grayscale");
+	otherMenu->addAction(grayscaleAction);
+
+
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(image);
     QWidget* widget = new QWidget;
@@ -91,6 +97,7 @@ int main(int argc, char* argv[])
     QObject::connect(resizeAction, &QAction::triggered, image, &Image::resizeImage);
     QObject::connect(rotateAction, &QAction::triggered, image, &Image::rotateImage);
     QObject::connect(saturationAction, &QAction::triggered, image, &Image::changeSaturation);
+    QObject::connect(grayscaleAction, &QAction::triggered, image, &Image::convertToGrayscale);
 
 
     window.show();
