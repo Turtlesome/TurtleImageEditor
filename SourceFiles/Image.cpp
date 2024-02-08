@@ -272,3 +272,60 @@ void Image::convertToGrayscale()
         this->setPixmap(originalPixmap);
     }
 };
+
+void Image::changeRGB()
+{
+    QDialog dialog(this);
+    QFormLayout form(&dialog);
+
+    // Create the spin boxes for the RGB shift values
+    QSpinBox* spinBoxR = new QSpinBox(&dialog);
+    spinBoxR->setRange(-255, 255);
+    form.addRow("Red Shift:", spinBoxR);
+
+    QSpinBox* spinBoxG = new QSpinBox(&dialog);
+    spinBoxG->setRange(-255, 255);
+    form.addRow("Green Shift:", spinBoxG);
+
+    QSpinBox* spinBoxB = new QSpinBox(&dialog);
+    spinBoxB->setRange(-255, 255);
+    form.addRow("Blue Shift:", spinBoxB);
+
+    // Add the Ok and Cancel buttons
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+
+    // Connect the Ok and Cancel buttons to their slots
+    QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+    QObject::connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+    // Show the dialog and get the RGB shift values if the user clicked Ok
+    if (dialog.exec() == QDialog::Accepted && !originalPixmap.isNull())
+    {
+        int deltaR = spinBoxR->value();
+        int deltaG = spinBoxG->value();
+        int deltaB = spinBoxB->value();
+
+        QImage image = originalPixmap.toImage();
+        for (int y = 0; y < image.height(); ++y)
+        {
+            for (int x = 0; x < image.width(); ++x)
+            {
+                QColor color(image.pixel(x, y));
+                int r = color.red();
+                int g = color.green();
+                int b = color.blue();
+                r = qMin(255, qMax(0, r + deltaR));
+                g = qMin(255, qMax(0, g + deltaG));
+                b = qMin(255, qMax(0, b + deltaB));
+                color.setRgb(r, g, b);
+                image.setPixelColor(x, y, color);
+            }
+        }
+        originalPixmap = QPixmap::fromImage(image);
+        this->setPixmap(originalPixmap);
+    }
+};
+
+
+
