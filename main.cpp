@@ -28,12 +28,12 @@ int main(int argc, char* argv[])
 
     QMenu* fileMenu = new QMenu("File");
     QMenu* optionMenu = new QMenu("Options");
-	QMenu* otherMenu = new QMenu("Other");
+    QMenu* otherMenu = new QMenu("Other");
     QMenu* zoomMenu = new QMenu("Zoom options");
-	QMenu* helpMenu = new QMenu("Help");
+    QMenu* helpMenu = new QMenu("Help");
     menuBar->addMenu(fileMenu);
     menuBar->addMenu(optionMenu);
-	menuBar->addMenu(otherMenu);
+    menuBar->addMenu(otherMenu);
     menuBar->addMenu(zoomMenu);
     menuBar->addMenu(helpMenu);
 
@@ -76,8 +76,8 @@ int main(int argc, char* argv[])
     optionMenu->addAction(saturationAction);
 
 
-	QAction* grayscaleAction = new QAction("Grayscale");
-	otherMenu->addAction(grayscaleAction);
+    QAction* grayscaleAction = new QAction("Grayscale");
+    otherMenu->addAction(grayscaleAction);
 
     QAction* RGBAction = new QAction("RGB");
     otherMenu->addAction(RGBAction);
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
     QObject::connect(rotateAction, &QAction::triggered, image, &Image::rotateImage);
     QObject::connect(saturationAction, &QAction::triggered, image, &Image::changeSaturation);
     QObject::connect(grayscaleAction, &QAction::triggered, image, &Image::convertToGrayscale);
-	QObject::connect(negativeAction, &QAction::triggered, image, &Image::createNegative);
+    QObject::connect(negativeAction, &QAction::triggered, image, &Image::createNegative);
     QObject::connect(cropAction, &QAction::triggered, image, [image] { image->enableCropMode(true); });
 
 
