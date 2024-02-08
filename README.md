@@ -12,4 +12,4 @@ Available features are:
 9.  Rotating image
 10. Mirroring image
 11. Grayscale
-12. RGB values of an image
+12. Changing RGB values of an image
