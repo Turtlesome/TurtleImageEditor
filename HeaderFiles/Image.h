@@ -11,6 +11,7 @@
 #include <QSpinBox>
 #include <QDialogButtonBox>
 #include <QPainter>
+#include <QMouseEvent>
 
 class Image : public QLabel {
     Q_OBJECT
@@ -18,9 +19,18 @@ class Image : public QLabel {
 private:
     QString fileName;
     QPixmap originalPixmap;
+    QRect cropArea;
+    QPoint origin;
     bool isMirrored;
     int brightness;
-	int contrast;
+    int contrast;
+    bool isCropMode;
+
+protected:
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
 public:
     Image(QWidget* parent = nullptr);
@@ -38,4 +48,7 @@ public:
     
     void convertToGrayscale();
     void changeRGB();
+    void createNegative();
+    void cropImage();
+    void enableCropMode(bool);
 };
