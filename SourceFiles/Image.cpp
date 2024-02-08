@@ -252,3 +252,23 @@ void Image::changeSaturation()
         this->setPixmap(originalPixmap);
     }
 }
+
+void Image::convertToGrayscale()
+{
+    if (!originalPixmap.isNull())
+    {
+        QImage image = originalPixmap.toImage();
+        for (int y = 0; y < image.height(); ++y)
+        {
+            for (int x = 0; x < image.width(); ++x)
+            {
+                QColor color(image.pixel(x, y));
+                int gray = qGray(color.rgb());
+                color.setRgb(gray, gray, gray);
+                image.setPixelColor(x, y, color);
+            }
+        }
+        originalPixmap = QPixmap::fromImage(image);
+        this->setPixmap(originalPixmap);
+    }
+};
