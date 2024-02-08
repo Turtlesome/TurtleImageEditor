@@ -1,7 +1,6 @@
 # TurtleImageEditor
 
-Work in progress
-Currently available features are:
+Available features are:
 1.  Loading image
 2.  Clearing the view
 3.  Saving the image
