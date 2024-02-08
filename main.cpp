@@ -82,6 +82,11 @@ int main(int argc, char* argv[])
     QAction* RGBAction = new QAction("RGB");
     otherMenu->addAction(RGBAction);
 
+    QAction* negativeAction = new QAction("Negative");
+    otherMenu->addAction(negativeAction);
+
+    QAction* cropAction = new QAction("Crop");
+    otherMenu->addAction(cropAction);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(image);
@@ -101,7 +106,8 @@ int main(int argc, char* argv[])
     QObject::connect(rotateAction, &QAction::triggered, image, &Image::rotateImage);
     QObject::connect(saturationAction, &QAction::triggered, image, &Image::changeSaturation);
     QObject::connect(grayscaleAction, &QAction::triggered, image, &Image::convertToGrayscale);
-    QObject::connect(RGBAction, &QAction::triggered, image, &Image::changeRGB);
+	QObject::connect(negativeAction, &QAction::triggered, image, &Image::createNegative);
+    QObject::connect(cropAction, &QAction::triggered, image, [image] { image->enableCropMode(true); });
 
 
     window.show();
