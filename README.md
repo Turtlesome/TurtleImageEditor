@@ -11,3 +11,4 @@ Available features are:
 8.  Resizing image
 9.  Rotating image
 10. Mirroring image
+11. Grayscale
