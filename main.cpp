@@ -79,6 +79,9 @@ int main(int argc, char* argv[])
 	QAction* grayscaleAction = new QAction("Grayscale");
 	otherMenu->addAction(grayscaleAction);
 
+    QAction* RGBAction = new QAction("RGB");
+    otherMenu->addAction(RGBAction);
+
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(image);
@@ -98,6 +101,7 @@ int main(int argc, char* argv[])
     QObject::connect(rotateAction, &QAction::triggered, image, &Image::rotateImage);
     QObject::connect(saturationAction, &QAction::triggered, image, &Image::changeSaturation);
     QObject::connect(grayscaleAction, &QAction::triggered, image, &Image::convertToGrayscale);
+    QObject::connect(RGBAction, &QAction::triggered, image, &Image::changeRGB);
 
 
     window.show();
