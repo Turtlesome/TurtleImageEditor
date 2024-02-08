@@ -13,4 +13,7 @@ Available features are:
 10. Mirroring image
 11. Grayscale
 12. Changing RGB values of an image
+13. Making a negative of an image
+14. Cropping (although can be a little buggy)
+    
 ![image](https://github.com/Turtlesome/TurtleImageEditor/assets/93761315/e9df54cb-a9e6-4360-be8d-5fa5f28a4531)
